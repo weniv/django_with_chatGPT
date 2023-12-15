@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}{{ post.title }} - My Site{% endblock %}
+
+{% block content %}
+<div style="padding: 20px;">
+    <h2>{{ post.title }}</h2>
+    <p><strong>Posted by:</strong> {{ post.author.username }} <strong>on</strong> {{ post.created_at|date:"Y-m-d" }}</p>
+    <div>
+        {{ post.content|linebreaks }}
+    </div>
+
+    <!-- 수정 및 삭제 버튼 -->
+    {% if user.is_authenticated and user == post.author %}
+        <a href="{% url 'blog:post_edit' post.id %}">Edit</a>
+        <a href="{% url 'blog:post_delete' post.id %}">Delete</a>
+    {% endif %}
+
+    <!-- 댓글 목록 및 댓글 작성 폼 -->
+    <div>
+        <h3>Comments:</h3>
+        {% if post.comments.all %}
+            <ul>
+                {% for comment in post.comments.all %}
+                    <li>
+                        <strong>{{ comment.author.username }}:</strong>
+                        {{ comment.content }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No comments yet.</p>
+        {% endif %}
+        <!-- 추가적으로, 댓글 작성 폼을 여기에 넣을 수 있습니다. -->
+        <!-- 로그인한 사용자만 댓글을 작성할 수 있습니다. -->
+        {% if user.is_authenticated %}
+            <div>
+                <h3>Leave a comment:</h3>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ comment_form.as_p }}
+                    <button type="submit">Submit Comment</button>
+                </form>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

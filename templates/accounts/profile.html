@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Profile - My Site{% endblock %}
+
+{% block content %}
+<div style="padding: 20px;">
+    <h2>User Profile</h2>
+    <p><strong>Username:</strong> {{ user.username }}</p>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <!-- UserProfile 모델의 추가 필드를 표시합니다. -->
+    {% if user.userprofile.bio %}
+        <p><strong>Bio:</strong> {{ user.userprofile.bio }}</p>
+    {% endif %}
+    {% if user.userprofile.profile_picture %}
+        <div>
+            <strong>Profile Picture:</strong>
+            <img src="{{ user.userprofile.profile_picture.url }}" alt="Profile Picture">
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

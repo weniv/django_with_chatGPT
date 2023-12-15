@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}My Site{% endblock %}</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .header, .footer { background-color: #f8f9fa; padding: 10px; text-align: center; }
+        .menu { background-color: #e9ecef; padding: 10px; text-align: center; }
+        .menu a { margin: 0 10px; text-decoration: none; color: #007bff; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Welcome to My Site</h1>
+    </div>
+
+    <div class="menu">
+        <a href="{% url 'main:index' %}">Home</a>
+        <a href="{% url 'blog:post_list' %}">Blog</a>
+        {% if user.is_authenticated %}
+            <a href="{% url 'accounts:profile' user.id %}">Profile</a>
+            <a href="{% url 'accounts:logout' %}">Logout</a>
+            <a href="{% url 'blog:post_create' %}">Write</a>
+        {% else %}
+            <a href="{% url 'accounts:login' %}">Login</a>
+            <a href="{% url 'accounts:signup' %}">Signup</a>
+        {% endif %}
+    </div>
+
+    <div class="content">
+        {% block content %}
+        <!-- Content goes here -->
+        {% endblock %}
+    </div>
+
+    <div class="footer">
+        <p>© 2023 My Site</p>
+    </div>
+
+    <script>
+        // Basic JavaScript if needed
+    </script>
+</body>
+</html>

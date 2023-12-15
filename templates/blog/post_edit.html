@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Post - My Site{% endblock %}
+
+{% block content %}
+<div style="padding: 20px;">
+    <h2>Edit Post</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Update Post</button>
+    </form>
+    <a href="{% url 'blog:post_detail' post.id %}">Cancel</a>
+</div>
+{% endblock %}
